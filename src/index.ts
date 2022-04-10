@@ -1,14 +1,14 @@
 
 import tokenizer from './tokenizer'
-// import parser from './parser'
+import parser from './parser'
 
 const code = `
-function getName() {
-  const name = 'wstreet';
+function getName(name) {
   console.log(name);
 }
 `
 
+// 词法分析
 const tokens = tokenizer.tokenize(code)
 console.log(tokens)
 
@@ -33,4 +33,49 @@ console.log(tokens)
 //   Token { type: 'R_CURLY', name: undefined, value: undefined }
 // ]
 
-// const ast = parser.parse(tokens)
+// 语法分析
+const ast = parser.parse(tokens)
+console.log(JSON.stringify(ast, undefined, 2))
+
+// {
+//   "type": "Program",
+//   "body": [
+//     {
+//       "type": "FunctionDeclaration",
+//       "id": {
+//         "type": "Identifier"
+//       },
+//       "params": [
+//         {
+//           "type": "Identifier"
+//         }
+//       ],
+//       "body": {
+//         "type": "BlockStatement",
+//         "body": [
+//           {
+//             "type": "ExpressionStatement",
+//             "expression": {
+//               "type": "CallExpression",
+//               "callee": {
+//                 "type": "MemberExpression",
+//                 "object": {
+//                   "type": "Identifier"
+//                 },
+//                 "property": {
+//                   "type": "Identifier"
+//                 },
+//                 "computed": false
+//               },
+//               "arguments": [
+//                 {
+//                   "type": "Identifier"
+//                 }
+//               ]
+//             }
+//           }
+//         ]
+//       }
+//     }
+//   ]
+// }

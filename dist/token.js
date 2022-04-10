@@ -53,10 +53,10 @@ class Token {
         return new Token(TokenType.EQUAL);
     }
     static identifier(name) {
-        return new Token(TokenType.IDENTIFIER, name);
+        return new Token(TokenType.IDENTIFIER, undefined, name);
     }
     static string_literal(value) {
-        return new Token(TokenType.STRING_LITERAL, undefined, value);
+        return new Token(TokenType.STRING_LITERAL, value);
     }
 }
 exports.Token = Token;

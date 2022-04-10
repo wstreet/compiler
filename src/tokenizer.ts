@@ -1,10 +1,10 @@
 import { Token } from "./token";
 
 export class Tokenizer {
-  current: number = 0;
-  input: string = "";
+  private current: number = 0;
+  private input: string = "";
 
-  static singleCharacter = new Map([
+  private static singleCharacter = new Map([
     ["(", Token.l_paren],
     [")", Token.r_paren],
     ["{", Token.l_curly],
@@ -14,29 +14,29 @@ export class Tokenizer {
     [";", Token.semicolon],
   ]);
 
-  static keywords = new Map([
+  private static keywords = new Map([
     ["function", Token.function_kw],
     ["const", Token.const_kw],
     ["var", Token.var_kw],
   ]);
 
-  static isWhiteSpace(char: string): boolean {
+  private static isWhiteSpace(char: string): boolean {
     return /\s/.test(char);
   }
-  static isAlpha(char: string): boolean {
+  private static isAlpha(char: string): boolean {
     return /[a-zA-Z]/.test(char);
   }
 
-  static isSingleCharacter(char: string): boolean {
+  private static isSingleCharacter(char: string): boolean {
     return Tokenizer.singleCharacter.has(char);
   }
 
-  static getCharToken(char: string): Token {
+  private static getCharToken(char: string): Token {
     const builder = Tokenizer.singleCharacter.get(char);
     return builder!();
   }
 
-  finishIdentifier(): Token {
+  private finishIdentifier(): Token {
     let name = "";
 
     while (Tokenizer.isAlpha(this.input[this.current])) {
@@ -50,7 +50,7 @@ export class Tokenizer {
     return Token.identifier(name); // 要么是标识符
   }
 
-  finishStringLiteral(): Token {
+  private finishStringLiteral(): Token {
     let value = "";
     while (this.input[this.current] && this.input[this.current] !== "'") {
       value += this.input[this.current];
